@@ -44,6 +44,25 @@
 #define HAVE_LOAD_EXTENSION
 #endif
 
+#if PY_VERSION_HEX < 0x02070200
+/* Python 2.7.1 is missing _PyInt_AsInt.  This is _PyInt_AsInt from the
+   Python 2.7.11 sources
+*/
+static int
+_PyInt_AsInt(PyObject *obj)
+{
+    long result = PyInt_AsLong(obj);
+    if (result == -1 && PyErr_Occurred())
+        return -1;
+    if (result > INT_MAX || result < INT_MIN) {
+        PyErr_SetString(PyExc_OverflowError,
+                        "Python int too large to convert to C int");
+        return -1;
+    }
+    return (int)result;
+}
+#endif  /* PY_VERSION_HEX <= 0x02070100 */
+
 static int pysqlite_connection_set_isolation_level(pysqlite_Connection* self, PyObject* isolation_level);
 static void _pysqlite_drop_unused_cursor_references(pysqlite_Connection* self);
 
