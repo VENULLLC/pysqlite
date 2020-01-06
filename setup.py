@@ -227,7 +227,7 @@ def get_setup_args():
     setup_args["cmdclass"].update({
         "build_docs": DocBuilder,
         "test": TestRunner,
-        "build_ext": MyBuildExt,
+        "build_ext": AmalgamationBuilder,
         "build_static": AmalgamationBuilder,
         "cross_bdist_wininst": cross_bdist_wininst.bdist_wininst
     })
