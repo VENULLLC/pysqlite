@@ -119,7 +119,7 @@ class AmalgamationBuilder(build):
         build.__init__(self, *args, **kwargs)
 
 class MyBuildExt(build_ext):
-    amalgamation = False
+    amalgamation = True
 
     def _pkgconfig(self, flag, package):
         status, output = commands.getstatusoutput("pkg-config %s %s" % (flag, package))
