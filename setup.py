@@ -37,7 +37,7 @@ import shutil
 
 from setuptools import setup, Extension, Command
 from setuptools.command.build_ext import build_ext
-from distutils.command.build import build
+from setuptools.command.build_py import build_py
 
 import cross_bdist_wininst
 
@@ -111,15 +111,15 @@ class DocBuilder(Command):
         if rc != 0:
             sys.stdout.write("Is sphinx installed? If not, try 'sudo pip sphinx'.\n")
 
-class AmalgamationBuilder(build):
+class AmalgamationBuilder(build_py):
     description = "Build a statically built pysqlite using the amalgamtion."
 
     def __init__(self, *args, **kwargs):
         MyBuildExt.amalgamation = True
-        build.__init__(self, *args, **kwargs)
+        build_py.__init__(self, *args, **kwargs)
 
 class MyBuildExt(build_ext):
-    amalgamation = True
+    amalgamation = False
 
     def _pkgconfig(self, flag, package):
         status, output = commands.getstatusoutput("pkg-config %s %s" % (flag, package))

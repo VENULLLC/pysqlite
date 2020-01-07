@@ -36,9 +36,6 @@ static int pysqlite_check_remaining_sql(const char* tail);
  * file here so we don't have to rely on the interpreter having the symbols
  * available.
  */
-#if PY_VERSION_HEX < 0x02070200
-#  if defined(MS_WINDOWS) || defined(PYOS_OS2)
-#  else
 int
 PyOS_mystrnicmp(const char *s1, const char *s2, Py_ssize_t size)
 {
@@ -60,8 +57,6 @@ PyOS_mystrnicmp(const char *s1, const char *s2, Py_ssize_t size)
 /*     } */
 /*     return (tolower((unsigned)*s1) - tolower((unsigned)*s2)); */
 /* } */
-#  endif  /* MS_WINDOWS || PYOS_OS2 */
-#endif  /* PY_VERSION_HEX <= 0x02070100 */
 
 typedef enum {
     LINECOMMENT_1,
