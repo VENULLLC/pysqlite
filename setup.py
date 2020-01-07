@@ -35,9 +35,9 @@ import os
 import re
 import shutil
 
-from distutils.core import setup, Extension, Command
+from setuptools import setup, Extension, Command
+from setuptools.command.build_ext import build_ext
 from distutils.command.build import build
-from distutils.command.build_ext import build_ext
 
 import cross_bdist_wininst
 
@@ -138,11 +138,11 @@ class MyBuildExt(build_ext):
 
     def build_extension(self, ext):
         if self.amalgamation:
-            ext.define_macros += [
-                    ("SQLITE_ENABLE_FTS3", "1"),
-                    ("SQLITE_ENABLE_FTS3_PARENTHESIS", "1"),
-                    ("SQLITE_ENABLE_FTS4", "1"),
-                    ("SQLITE_ENABLE_RTREE", "1")]
+            #ext.define_macros += [
+            #        ("SQLITE_ENABLE_FTS3", "1"),
+            #        ("SQLITE_ENABLE_FTS3_PARENTHESIS", "1"),
+            #        ("SQLITE_ENABLE_FTS4", "1"),
+            #        ("SQLITE_ENABLE_RTREE", "1")]
             ext.sources.append("sqlite3.c")
         try:
             ext.include_dirs = self._pkgconfig_include_dirs("sqlite3")
